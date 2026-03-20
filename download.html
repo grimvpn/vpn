@@ -334,14 +334,16 @@ margin-top:110px;
 <div class="container">
     <div class="downloads">
         <!-- Существующие карточки -->
+        
         <div class="card">
             <div class="card-icon">
-                <img src="byebyedpi.webp" alt="GoodbyeDPI">
+                <img src="happ.webp" alt="Happ">
             </div>
-            <h3>ByeByeDPI</h3>
-            <p>Инструмент для Обхода DPI на Android</p>
-            <button class="download-btn" onclick="showSources(1)">СКАЧАТЬ</button>
+            <h3>Happ</h3>
+            <p>Инструмент для подключения к VPN</p>
+            <button class="download-btn" onclick="showSources(3)">СКАЧАТЬ</button>
         </div>
+        
         <div class="card">
             <div class="card-icon">
                 <img src="v2raytun.webp" alt="v2RayTun">
@@ -350,13 +352,14 @@ margin-top:110px;
             <p>Инструмент для подключения к VPN</p>
             <button class="download-btn" onclick="showSources(2)">СКАЧАТЬ</button>
         </div>
+        
         <div class="card">
             <div class="card-icon">
-                <img src="happ.webp" alt="Happ">
+                <img src="nekobox.webp" alt="NekoBox">
             </div>
-            <h3>Happ</h3>
+            <h3>NekoBox</h3>
             <p>Инструмент для подключения к VPN</p>
-            <button class="download-btn" onclick="showSources(3)">СКАЧАТЬ</button>
+            <button class="download-btn" onclick="showSources(1)">СКАЧАТЬ</button>
         </div>
 
         <div class="card">
@@ -413,8 +416,8 @@ const modal = document.getElementById('modal');
 const sourcesContainer = document.getElementById('sources-container');
 
 const cardSources = {
-    1: [ /* ByeByeDPI */ 
-        {icon: "github.webp", link: "https://github.com/romanvht/ByeByeDPI/releases"},
+    1: [ /* NekoBox */ 
+        {icon: "github.webp", link: "https://github.com/MatsuriDayo/NekoBoxForAndroid/releases"},
         {icon: "direct.webp", link: ""},
         {icon: "playmarket.webp", link: ""},
         {icon: "appstore.webp", link: ""},
