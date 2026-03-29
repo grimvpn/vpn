@@ -1,1 +1,1 @@
-# vpn site
+# vpn service Grim VPN
