@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grim VPN | Инструменты</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        :root { --tw-color-primary: #00ff9d; }
+        * { font-family: 'Inter', system-ui, sans-serif; }
+        body { background: #0a0a0a; color: #f0f0f0; }
+        .header-bg { background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%); }
+        .hero-bg { background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 70%); }
+        .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 25px 50px -12px rgb(0 255 157 / 0.15); }
+       
+        .app-icon {
+            width: 92px;
+            height: 92px;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 15px rgba(0, 255, 157, 0.15));
+        }
+        .source-btn {
+            width: 152px;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.08);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        .source-btn:hover {
+            background: #00ff9d;
+            transform: scale(1.08);
+        }
+        .source-btn img {
+            max-width: 130px;
+            max-height: 52px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="header-bg border-b border-white/10 sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-6 py-5 flex items-center">
+            
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-[#00ff9d] rounded-2xl flex items-center justify-center text-black font-bold text-2xl rotate-12">G</div>
+                <h1 class="text-3xl font-semibold tracking-tighter">grim</h1>
+            </div>
+
+            <nav class="flex-1 flex justify-center items-center gap-8 text-sm font-medium hidden md:flex">
+                <a href="index.html" class="hover:text-[#00ff9d] transition-colors">Главная</a>
+                <a href="index.html#tariffs" class="hover:text-[#00ff9d] transition-colors">Тарифы</a>
+                <a href="https://t.me/grimvpn" target="_blank" class="hover:text-[#00ff9d] transition-colors">Блог</a>
+                <a href="tools.html" class="text-[#00ff9d] font-semibold">Инструменты</a>
+                <a href="connection.html" class="hover:text-[#00ff9d] transition-colors">Связаться с нами</a>
+            </nav>
+
+            <button onclick="toggleMobileMenu()" class="md:hidden w-11 h-11 flex items-center justify-center text-3xl">
+                <span id="menu-icon">☰</span>
+            </button>
+        </div>
+
+        <div onclick="if(event.target.id === 'mobile-menu-overlay') toggleMobileMenu()" 
+             id="mobile-menu-overlay" 
+             class="hidden fixed inset-0 bg-black/70 z-[999] md:hidden">
+            <div onclick="event.stopImmediatePropagation()" 
+                 id="mobile-menu" 
+                 class="bg-[#111] border-t border-white/10 px-6 py-6 text-sm font-medium flex flex-col gap-6 absolute top-0 left-0 right-0 mt-[73px]">
+                <a href="index.html" onclick="toggleMobileMenu()" class="hover:text-[#00ff9d]">Главная</a>
+                <a href="index.html#tariffs" onclick="toggleMobileMenu()" class="hover:text-[#00ff9d]">Тарифы</a>
+                <a href="https://t.me/grimvpn" target="_blank" onclick="toggleMobileMenu()" class="hover:text-[#00ff9d]">Блог</a>
+                <a href="tools.html" onclick="toggleMobileMenu()" class="text-[#00ff9d]">Инструменты</a>
+                <a href="connection.html" onclick="toggleMobileMenu()" class="hover:text-[#00ff9d]">Связаться с нами</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-bg pt-20 pb-16">
+        <div class="max-w-screen-2xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/10 text-[#00ff9d] text-xs font-semibold tracking-[1px] px-4 h-9 rounded-3xl mb-6">
+                ОФИЦИАЛЬНЫЕ КЛИЕНТЫ
+            </div>
+            <h1 class="text-5xl md:text-6xl font-semibold leading-none tracking-tighter">Инструменты<br>для Grim VPN</h1>
+            <p class="text-xl md:text-2xl text-white/70 mt-6">Выберите удобный клиент для VLESS-протокола</p>
+        </div>
+    </section>
+
+    <section class="max-w-screen-2xl mx-auto px-6 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center">
+                <img src="nekobox.webp" alt="NekoBox" class="app-icon mb-6">
+                <h3 class="text-2xl font-semibold mb-2">NekoBox</h3>
+                <p class="text-white/70 flex-1">Универсальный клиент для Android</p>
+                <button onclick="showSources(1)" class="mt-8 w-full py-4 bg-white text-black font-semibold rounded-3xl hover:bg-[#00ff9d]">СКАЧАТЬ</button>
+            </div>
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center">
+                <img src="v2raytun.webp" alt="v2RayTun" class="app-icon mb-6">
+                <h3 class="text-2xl font-semibold mb-2">v2RayTun</h3>
+                <p class="text-white/70 flex-1">Android / iOS</p>
+                <button onclick="showSources(2)" class="mt-8 w-full py-4 bg-white text-black font-semibold rounded-3xl hover:bg-[#00ff9d]">СКАЧАТЬ</button>
+            </div>
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center">
+                <img src="happ.webp" alt="Happ" class="app-icon mb-6">
+                <h3 class="text-2xl font-semibold mb-2">Happ</h3>
+                <p class="text-white/70 flex-1">Android / iOS</p>
+                <button onclick="showSources(3)" class="mt-8 w-full py-4 bg-white text-black font-semibold rounded-3xl hover:bg-[#00ff9d]">СКАЧАТЬ</button>
+            </div>
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center">
+                <img src="v2rayN.webp" alt="v2rayN" class="app-icon mb-6">
+                <h3 class="text-2xl font-semibold mb-2">v2rayN</h3>
+                <p class="text-white/70 flex-1">Desktop клиент для Windows</p>
+                <button onclick="showSources(4)" class="mt-8 w-full py-4 bg-white text-black font-semibold rounded-3xl hover:bg-[#00ff9d]">СКАЧАТЬ</button>
+            </div>
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center">
+                <img src="hiddify.webp" alt="Hiddify" class="app-icon mb-6">
+                <h3 class="text-2xl font-semibold mb-2">Hiddify</h3>
+                <p class="text-white/70 flex-1">Android / iOS</p>
+                <button onclick="showSources(5)" class="mt-8 w-full py-4 bg-white text-black font-semibold rounded-3xl hover:bg-[#00ff9d]">СКАЧАТЬ</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black border-t border-white/10 py-12">
+        <div class="max-w-screen-2xl mx-auto px-6 text-xs text-white/40 flex flex-wrap justify-between items-center gap-6">
+            <div>© 2026 Grim VPN. Все права защищены.</div>
+            <div class="flex gap-6">
+                <a href="privacy.html" class="hover:text-white">Privacy Policy</a>
+                <a href="useragreement.html" class="hover:text-white">User Agreement</a>
+                <a href="https://t.me/grimvpn" target="_blank" class="hover:text-white">Блог</a>
+                <a href="connection.html" class="hover:text-white">Поддержка</a>
+            </div>
+            <div>Service <span class="text-[#00ff9d]">Grim VPN</span> • Ваш интернет - только ваш</div>
+        </div>
+    </footer>
+
+    <div onclick="if(event.target.id === 'sources-modal') hideSourcesModal()" id="sources-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-xl z-[9999] items-center justify-center">
+        <div onclick="event.stopImmediatePropagation()" class="bg-[#111] max-w-lg w-full mx-4 rounded-3xl p-8 relative">
+            <button onclick="hideSourcesModal()" class="absolute top-5 right-5 text-4xl text-white/60 hover:text-white">×</button>
+            <h3 class="text-2xl font-semibold mb-8 text-center">Выберите источник скачивания</h3>
+            <div id="sources-container" class="flex flex-wrap gap-4 justify-center"></div>
+        </div>
+    </div>
+
+    <script>
+        const cardSources = {
+            1: [{icon: "github.webp", link: "https://github.com/MatsuriDayo/NekoBoxForAndroid/releases"}],
+            2: [{icon: "playmarket.webp", link: "https://play.google.com/store/apps/details?id=com.v2raytun.android"},{icon: "appstore.webp", link: "https://apps.apple.com/us/app/v2raytun/id6476628951"}],
+            3: [{icon: "github.webp", link: "https://github.com/Happ-proxy"},{icon: "direct.webp", link: "https://github.com/Happ-proxy/happ-android/releases/latest/download/Happ.apk"},{icon: "playmarket.webp", link: "https://play.google.com/store/apps/details?id=com.happproxy"},{icon: "appstore.webp", link: "https://apps.apple.com/us/app/happ-proxy-utility/id6504287215?platform=iphone"}],
+            4: [{icon: "github.webp", link: "https://github.com/2dust/v2rayN/releases"}],
+            5: [{icon: "github.webp", link: "https://github.com/hiddify/hiddify-app/releases"},{icon: "playmarket.webp", link: "https://play.google.com/store/apps/details?id=app.hiddify.com"},{icon: "appstore.webp", link: "https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532?platform=iphone"}]
+        };
+
+        function showSources(cardId) {
+            const container = document.getElementById('sources-container');
+            container.innerHTML = '';
+            const sources = cardSources[cardId] || [];
+            sources.forEach(src => {
+                if (!src.link) return;
+                const a = document.createElement('a');
+                a.href = src.link;
+                a.target = "_blank";
+                a.className = "source-btn";
+                a.innerHTML = `<img src="${src.icon}" alt="">`;
+                container.appendChild(a);
+            });
+            document.getElementById('sources-modal').style.display = 'flex';
+        }
+
+        function hideSourcesModal() {
+            document.getElementById('sources-modal').style.display = 'none';
+        }
+
+        let isMenuOpen = false;
+        function toggleMobileMenu() {
+            const overlay = document.getElementById('mobile-menu-overlay');
+            const icon = document.getElementById('menu-icon');
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                overlay.classList.remove('hidden'); 
+                overlay.classList.add('flex');
+                icon.textContent = '✕'; 
+                icon.style.transform = 'rotate(90deg)';
+            } else {
+                overlay.classList.add('hidden'); 
+                overlay.classList.remove('flex');
+                icon.textContent = '☰'; 
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+</body>
+</html>

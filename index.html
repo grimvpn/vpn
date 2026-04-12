@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grim VPN | Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap');
+    
+        :root {
+            --tw-color-primary: #00ff9d;
+        }
+    
+        * {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+    
+        body {
+            background: #0a0a0a;
+            color: #f0f0f0;
+        }
+    
+        .header-bg {
+            background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+        }
+    
+        .hero-bg {
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 70%);
+        }
+    
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px -12px rgb(0 255 157 / 0.15);
+        }
+    
+        .section-title {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+    
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    
+        .feature-icon {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(8deg);
+        }
+    
+        .sbs-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+    
+        .sbs-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    
+        .hero-section {
+            padding-top: 128px !important;
+        }
+    
+        .faq-item.active .faq-answer {
+            max-height: 600px;
+            opacity: 1;
+        }
+        .faq-answer {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .faq-item span {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .faq-item.active span {
+            transform: rotate(90deg);
+        }
+    
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 20px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #00ff9d;
+            border-radius: 20px;
+        }
+        #order-modal .modal-inner {
+            max-height: 95vh;
+        }
+       
+        @media (max-width: 640px) {
+            #order-modal .modal-inner {
+                margin: 16px;
+                border-radius: 20px;
+                padding: 20px 16px;
+                max-height: 96vh;
+            }
+        }
+        #success-banner {
+            animation: slideDown 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes slideDown {
+            0% { transform: translate(-50%, -20px); opacity: 0; }
+            100% { transform: translate(-50%, 0); opacity: 1; }
+        }
+        #menu-icon {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .warning-banner {
+            background: linear-gradient(90deg, #451a03, #78350f);
+            border: 1px solid #f59e0b;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <header class="header-bg border-b border-white/10 sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-[#00ff9d] rounded-2xl flex items-center justify-center text-black font-bold text-2xl rotate-12">G</div>
+                <h1 class="text-3xl font-semibold tracking-tighter">grim</h1>
+            </div>
+        
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="index" class="text-[#00ff9d] font-semibold">Главная</a>
+                <a href="#" onclick="document.getElementById('tariffs').scrollIntoView({behavior:'smooth'})" class="hover:text-[#00ff9d] transition-colors">Тарифы</a>
+                <a href="https://t.me/grimvpn" target="_blank" class="hover:text-[#00ff9d] transition-colors">Блог</a>
+                <a href="tools" class="hover:text-[#00ff9d] transition-colors">Инструменты</a>
+                <a href="connection" class="hover:text-[#00ff9d] transition-colors">Связаться с нами</a>
+            </nav>
+        
+            <div class="flex items-center gap-4">
+                <div onclick="showOrderModal()" class="cursor-pointer flex items-center gap-2 bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-3xl text-sm font-semibold transition-all">
+                    <span class="font-medium">Корзина</span>
+                    <span id="cart-count" class="text-[#00ff9d] font-semibold">0</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+            
+                <button onclick="toggleMobileMenu()" class="md:hidden w-11 h-11 flex items-center justify-center text-3xl">
+                    <span id="menu-icon">☰</span>
+                </button>
+            </div>
+        </div>
+    
+        <div onclick="if(event.target.id === 'mobile-menu-overlay') toggleMobileMenu()"
+             id="mobile-menu-overlay"
+             class="hidden fixed inset-0 bg-black/70 z-[999] md:hidden">
+            <div onclick="event.stopImmediatePropagation()"
+                 id="mobile-menu"
+                 class="bg-[#111] border-t border-white/10 px-6 py-6 text-sm font-medium flex flex-col gap-6 absolute top-0 left-0 right-0 mt-[73px]">
+                <a href="index" onclick="toggleMobileMenu()" class="text-[#00ff9d]">Главная</a>
+                <a href="#" onclick="document.getElementById('tariffs').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" class="hover:text-[#00ff9d]">Тарифы</a>
+                <a href="https://t.me/grimvpn" target="_blank" onclick="toggleMobileMenu()" class="hover:text-[#00ff9d]">Блог</a>
+                <a href="tools" onclick="toggleMobileMenu()" class="hover:text-[#00ff9d]">Инструменты</a>
+                <a href="connection" onclick="toggleMobileMenu()" class="hover:text-[#00ff9d]">Связаться с нами</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-bg hero-section pt-20 pb-16">
+        <div class="max-w-screen-2xl mx-auto px-6">
+            <div class="max-w-2xl mx-auto text-center">
+                <div class="inline-flex items-center gap-2 bg-white/10 text-[#00ff9d] text-xs font-semibold tracking-[1px] px-4 h-9 rounded-3xl mb-6">
+                    <div class="w-2 h-2 bg-[#00ff9d] rounded-full animate-pulse"></div>
+                    НОВИНКА 2026
+                </div>
+            
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-semibold leading-none tracking-tighter">
+                    GRIM VPN<br>
+                    <span class="text-[#00ff9d]">НАДЁЖНАЯ ЗАЩИТА</span>
+                </h1>
+            
+                <p class="text-xl md:text-2xl text-white/70 mt-6">
+                    Zero-log • Encryption
+                </p>
+            
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+                    <button onclick="buyPlan(1)"
+                            class="bg-[#00ff9d] hover:bg-white text-black font-semibold text-lg px-10 py-5 rounded-3xl flex items-center gap-3 transition-all active:scale-95 w-full sm:w-auto">
+                        Подключить за 300 ₽/мес
+                        <span class="text-sm bg-black/10 px-3 py-1 rounded-2xl">1 месяц</span>
+                    </button>
+                
+                    <button onclick="document.getElementById('tariffs').scrollIntoView({behavior:'smooth'})"
+                            class="border border-white/30 hover:border-white/70 font-medium text-lg px-8 py-5 rounded-3xl transition-all w-full sm:w-auto">
+                        Все тарифы →
+                    </button>
+                </div>
+            
+                <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm mt-12">
+                    <div class="flex items-center gap-2"><span class="text-[#00ff9d]">✓</span> Быстрая отправка ключа</div>
+                    <div class="flex items-center gap-2"><span class="text-[#00ff9d]">✓</span> Стабильное подключение</div>
+                    <div class="flex items-center gap-2"><span class="text-[#00ff9d]">✓</span> Работает на всех устройствах</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="max-w-screen-2xl mx-auto px-6 py-4 border-b border-white/10 flex items-center justify-center gap-8 text-sm bg-white/5">
+        <div class="flex items-center gap-3">
+            <span class="text-[#00ff9d] text-2xl">🌍</span>
+            <div><strong>Работает по всему миру</strong></div>
+        </div>
+        <div class="h-4 w-px bg-white/20"></div>
+        <div class="flex items-center gap-2 text-[#00ff9d]">
+            <span>Даже на парковке! 🚀</span>
+        </div>
+    </div>
+    <div class="max-w-screen-2xl mx-auto px-6 py-8">
+        <div class="warning-banner rounded-3xl p-8 text-center flex flex-col md:flex-row items-center gap-6">
+            <div class="text-5xl flex-shrink-0">⚠️</div>
+            <div class="flex-1 text-left">
+                <p class="text-amber-300 text-sm font-semibold tracking-widest mb-1">ВНИМАНИЕ</p>
+                <p class="text-xl md:text-2xl font-medium leading-tight text-white">
+                    На данный момент автоматическая оплата не работает.
+                </p>
+                <p class="mt-4 text-amber-100">
+                    Напишите нам на почту <a href="mailto:grimvpn@gmail.com" class="underline hover:text-amber-300">grimvpn@gmail.com</a><br>
+                    или в Telegram-бота <a href="https://t.me/GrimvpnBot" target="_blank" class="underline hover:text-amber-300">@GrimvpnBot</a>
+                </p>
+                <p class="mt-5 text-amber-200 text-lg">Мы с радостью поможем вам оформить заказ вручную.</p>
+            </div>
+        </div>
+    </div>
+    <section id="tariffs" class="max-w-screen-2xl mx-auto px-6 py-20">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-semibold tracking-tighter mb-3">Выберите тариф</h2>
+            <p class="text-white/60 max-w-md mx-auto">После покупки вам на почту будет выдан ключ для подключения</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 cursor-default hover:border-[#00ff9d]/30 group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <div class="text-sm text-[#00ff9d] font-semibold">БАЗОВЫЙ</div>
+                        <div class="text-5xl font-semibold mt-2">350 ₽</div>
+                        <div class="text-white/40 text-sm">1 месяц</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs bg-white/10 px-4 py-1 rounded-3xl">ПОПУЛЯРНО</div>
+                    </div>
+                </div>
+                <ul class="mt-8 space-y-4 text-sm">
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Стабильное подключение</li>
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Доступ ко всем сервисам</li>
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Безопасность</li>
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Отсутствие цензуры</li>
+                </ul>
+                <button onclick="buyPlan(1)" class="w-full mt-12 bg-white text-black font-semibold py-5 rounded-3xl group-hover:bg-[#00ff9d]">Подключить</button>
+            </div>
+        
+            <div class="card-hover bg-gradient-to-br from-[#00ff9d] to-[#00cc7a] text-black border-2 border-[#00ff9d] rounded-3xl p-8 cursor-default scale-105 relative">
+                <div class="absolute -top-3 right-6 bg-black text-[#00ff9d] text-xs font-bold px-6 py-1 rounded-3xl">ЛУЧШИЙ ВЫБОР</div>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <div class="text-sm font-semibold">PREMIUM</div>
+                        <div class="flex items-baseline gap-2 mb-1">
+                            <span class="text-5xl font-semibold">890 ₽</span>
+                            <span class="text-xl text-black/40 line-through">1050 ₽</span>
+                        </div>
+                        <div class="text-sm text-black/40 font-medium">~296 ₽ в месяц (Экономия 15%)</div>
+                    </div>
+                </div>
+                <ul class="mt-8 space-y-4 text-sm">
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Скидка 15%</li>
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Стабильное подключение</li>
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Доступ ко всем сервисам</li>
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Безопасность</li>
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Отсутствие цензуры</li>
+                </ul>
+                <button onclick="buyPlan(2)" class="w-full mt-12 bg-black text-white font-semibold py-5 rounded-3xl">Подключить</button>
+            </div>
+        
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 cursor-default hover:border-[#00ff9d]/30 group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <div class="text-sm text-[#00ff9d] font-semibold">ULTIMATE</div>
+                        <div class="flex items-baseline gap-2 mb-1">
+                            <span class="text-5xl font-semibold">1470 ₽</span>
+                            <span class="text-xl text-white/40 line-through">2100 ₽</span>
+                        </div>
+                        <div class="text-sm text-white/50 font-medium">245 ₽ в месяц (Экономия 30%)</div>
+                    </div>
+                </div>
+                <ul class="mt-8 space-y-4 text-sm">
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Скидка 30%</li>
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Стабильное подключение</li>
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Доступ ко всем сервисам</li>
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Безопасность</li>
+                    <li class="flex gap-3"><span class="text-[#00ff9d]">✓</span> Отсутствие цензуры</li>
+                </ul>
+                <button onclick="buyPlan(3)" class="w-full mt-12 bg-white text-black font-semibold py-5 rounded-3xl group-hover:bg-[#00ff9d]">Подключить</button>
+            </div>
+        </div>
+    </section>
+    <section id="features" class="max-w-screen-2xl mx-auto px-6 py-20 bg-black">
+        <div class="text-center mb-16">
+            <h2 class="section-title text-4xl font-semibold tracking-tighter">Что вы получите с Grim VPN</h2>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="feature-card bg-white/5 border border-white/10 rounded-3xl p-8 sbs-scroll">
+                <div class="feature-icon text-4xl mb-6">🔐</div>
+                <h3 class="font-semibold text-xl mb-3">Защищённое подключение</h3>
+                <p class="text-white/60">Ваше соединение полностью шифруется.</p>
+            </div>
+            <div class="feature-card bg-white/5 border border-white/10 rounded-3xl p-8 sbs-scroll">
+                <div class="feature-icon text-4xl mb-6">🎮</div>
+                <h3 class="font-semibold text-xl mb-3">Дешёвые подписки и игры</h3>
+                <p class="text-white/60">Меняй местоположение для более выгодной покупки товаров, подписок, игр.</p>
+            </div>
+            <div class="feature-card bg-white/5 border border-white/10 rounded-3xl p-8 sbs-scroll">
+                <div class="feature-icon text-4xl mb-6">📡</div>
+                <h3 class="font-semibold text-xl mb-3">Высокую скорость</h3>
+                <p class="text-white/60">Получите скорость до 300 Мб/сек.</p>
+            </div>
+            <div class="feature-card bg-white/5 border border-white/10 rounded-3xl p-8 sbs-scroll">
+                <div class="feature-icon text-4xl mb-6">💡</div>
+                <h3 class="font-semibold text-xl mb-3">Быструю поддержку</h3>
+                <p class="text-white/60">Наша поддержка всегда будет рада вам помочь.</p>
+            </div>
+            <div class="feature-card bg-white/5 border border-white/10 rounded-3xl p-8 sbs-scroll">
+                <div class="feature-icon text-4xl mb-6">🌐</div>
+                <h3 class="font-semibold text-xl mb-3">Безопасное использование общественных точек Wi-Fi</h3>
+                <p class="text-white/60">Вашё соединение и трафик защищён, никто не сможет создать ваш слепок или анализировать трафик.</p>
+            </div>
+            <div class="feature-card bg-white/5 border border-white/10 rounded-3xl p-8 sbs-scroll">
+                <div class="feature-icon text-4xl mb-6">🌍</div>
+                <h3 class="font-semibold text-xl mb-3">Доступ ко всем сервисам</h3>
+                <p class="text-white/60">Получите доступ ко всём заблокированным и недоступным ресурсам</p>
+            </div>
+        </div>
+    </section>
+    <section class="max-w-screen-2xl mx-auto px-6 py-20 border-t border-white/10">
+        <div class="grid md:grid-cols-2 gap-12">
+            <div>
+                <h2 class="text-3xl font-semibold mb-8">Наши преимущества</h2>
+                <div class="space-y-6 text-sm">
+                    <div class="flex justify-between border-b border-white/10 pb-6">
+                        <div class="font-medium">Протоколы</div>
+                        <div class="text-right">VLess</div>
+                    </div>
+                    <div class="flex justify-between border-b border-white/10 pb-6">
+                        <div class="font-medium">No-logs политика</div>
+                        <div class="text-right text-[#00ff9d]">Мы не собираем логи!</div>
+                    </div>
+                    <div class="flex justify-between border-b border-white/10 pb-6">
+                        <div class="font-medium">Устройства</div>
+                        <div class="text-right">До 5 устройств</div>
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="font-medium">Обновления</div>
+                        <div class="text-right">Мы часто обновляем конфигурации и придумываем новые методы их улучшения</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white/5 rounded-3xl p-8 text-sm leading-relaxed">
+                <strong>Привет дружище!</strong><br><br>
+                Мы сервис Grim VPN, рады новым пользователям. Для нас Вы не товар! Для нас Вы новый участник нашего сообщества.<br><br>
+                А в сообществе принято помогать друг другу. Мы не собираем ваши данные, чтобы перепродать их подороже. Мы создаем инструмент, который позволяет чувствовать себя в сети безопасно и удобно. Здесь нет скрытых подписок или сомнительных правил. Только честный доступ к любому контенту и защита. Пользуйся с удовольствием и забудь о блокировках.<br><br>
+            </div>
+        </div>
+    </section>
+    <section id="faq" class="max-w-screen-2xl mx-auto px-6 py-20 pb-32 bg-[#111]">
+        <h2 class="text-4xl font-semibold tracking-tighter text-center mb-12">Часто задаваемые вопросы</h2>
+        <div class="max-w-2xl mx-auto space-y-4">
+            <div onclick="this.classList.toggle('active')" class="faq-item bg-white/10 rounded-3xl p-6 cursor-pointer transition-all">
+                <div class="flex justify-between items-center">
+                    <div class="font-medium">Что нужно для подключения?</div>
+                    <span class="text-2xl">›</span>
+                </div>
+               <div class="faq-answer mt-4 text-white/70">Для подключения вам нужен любой установленный клиент поддерживающий VLess протокол, например: 
+            <a href="https://github.com/Happ-proxy" target="_blank" class="text-[#00ff9d] hover:underline">Happ</a>, 
+            <a href="tools" class="text-[#00ff9d] hover:underline">V2RayTun</a>, 
+            <a href="https://github.com/2dust/v2rayN/releases" target="_blank" class="text-[#00ff9d] hover:underline">V2rayNG</a>,
+            <a href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases" target="_blank" class="text-[#00ff9d] hover:underline">NekoBox</a> 
+               или 
+            <a href="https://github.com/hiddify/hiddify-app/releases" target="_blank" class="text-[#00ff9d] hover:underline">Hiddify</a>. 
+               Найти их можно в Инструментах на нашем сайте.
+            </div>
+            </div>
+            <div onclick="this.classList.toggle('active')" class="faq-item bg-white/10 rounded-3xl p-6 cursor-pointer transition-all">
+                <div class="flex justify-between items-center">
+                    <div class="font-medium">Сколько устройств можно подключить?</div>
+                    <span class="text-2xl">›</span>
+                </div>
+                <div class="faq-answer mt-4 text-white/70">Подключить можно максимум до 5 устройств.</div>
+            </div>
+            <div onclick="this.classList.toggle('active')" class="faq-item bg-white/10 rounded-3xl p-6 cursor-pointer transition-all">
+                <div class="flex justify-between items-center">
+                    <div class="font-medium">Что делать если не удаётся подключится?</div>
+                    <span class="text-2xl">›</span>
+                </div>
+                <div class="faq-answer mt-4 text-white/70">Попробуйте обновить список доступных серверов в своём VPN клиенте, если не удётся обновить, то попробуйте удалить подписку из VPN клиента и вставить снова, должно быть стабильное интернет соединение для лучшего результата. Если ничего из перечисленного не помогает - свяжитесь с нами и мы постараемя вам помочь. Так же следите за новостями в нашем 
+                  <a href="https://t.me/grimvpn" target="_blank" class="text-[#00ff9d] hover:underline font-medium">КАНАЛЕ</a>, 
+               там будут публиковаться новости касающиеся нашего сервиса.
+            </div>
+            </div>
+        </div>
+    </section>
+    <footer class="bg-black border-t border-white/10 py-12">
+        <div class="max-w-screen-2xl mx-auto px-6 text-xs text-white/40 flex flex-wrap justify-between items-center gap-6">
+            <div>© 2026 Grim VPN. Все права защищены.</div>
+            <div class="flex gap-6">
+                <a href="privacy" class="hover:text-white">Privacy Policy</a>
+                <a href="useragreement" class="hover:text-white">User Agreement</a>
+                <a href="https://t.me/grimvpn" target="_blank" class="hover:text-white">Блог</a>
+                <a href="connection" class="hover:text-white">Поддержка</a>
+            </div>
+            <div class="flex items-center gap-2">
+                Service <span class="text-[#00ff9d]">Grim VPN</span> • Ваш интернет - только ваш
+            </div>
+        </div>
+    </footer>
+    <div onclick="if(event.target.id === 'order-modal') hideOrderModal()" id="order-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-xl z-[9999] items-center justify-center">
+        <div onclick="event.stopImmediatePropagation()" class="modal-inner bg-[#111] max-w-lg w-full mx-4 rounded-3xl p-8 flex flex-col relative">
+            <button onclick="hideOrderModal()" class="absolute top-5 right-5 text-4xl leading-none text-white/60 hover:text-white transition-colors">×</button>
+            <h3 class="text-2xl font-semibold mb-6 flex-shrink-0">Ваша корзина</h3>
+            <div id="modal-cart-content" class="flex-1 overflow-y-auto space-y-6 custom-scroll pr-2"></div>
+        </div>
+    </div>
+    <div id="success-banner" onclick="if(event.target.id === 'success-banner') hideSuccessBanner()"
+         class="hidden fixed top-6 left-1/2 -translate-x-1/2 warning-banner rounded-3xl px-8 py-6 shadow-2xl flex items-center gap-6 z-[10000] max-w-lg w-full mx-4">
+        <div class="text-5xl flex-shrink-0">❌</div>
+        <div class="flex-1">
+            <div class="font-semibold text-2xl text-white">Ошибка</div>
+            <div class="mt-3 text-amber-100 text-lg">
+                На данный момент у нас не работает автоматическая оплата.<br>
+                Напишите нам на почту <a href="mailto:grimvpn@gmail.com" class="underline">grimvpn@gmail.com</a><br>
+                или в Telegram-бота <a href="https://t.me/GrimvpnBot" target="_blank" class="underline">@GrimvpnBot</a><br>
+                Мы с радостью поможем вам с оформлением.
+            </div>
+        </div>
+        <button onclick="hideSuccessBanner(); event.stopImmediatePropagation()"
+                class="text-4xl leading-none text-white/70 hover:text-white px-3">×</button>
+    </div>
+    <div id="error-banner" onclick="if(event.target.id === 'error-banner') hideErrorBanner()"
+         class="hidden fixed top-6 left-1/2 -translate-x-1/2 bg-red-500 text-white rounded-3xl px-8 py-5 shadow-2xl flex items-center gap-4 z-[10000] max-w-lg w-full mx-4">
+        <div class="flex-1">
+            <div id="error-message" class="font-semibold text-xl"></div>
+        </div>
+        <button onclick="hideErrorBanner(); event.stopImmediatePropagation()"
+                class="text-3xl leading-none px-3 hover:text-white/70">×</button>
+    </div>
+    <script>
+        function initTailwind() { return { config(userConfig = {}) { return { configUser: userConfig, defaultTheme: { extend: {} } } } } }
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.sbs-scroll')
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible') })
+            }, { threshold: 0.2 })
+            elements.forEach(el => observer.observe(el))
+        }
+        let cart = []
+        let selectedPayment = null
+        let isMenuOpen = false
+        function toggleMobileMenu() {
+            const overlay = document.getElementById('mobile-menu-overlay')
+            const icon = document.getElementById('menu-icon')
+            isMenuOpen = !isMenuOpen
+            if (isMenuOpen) {
+                overlay.classList.remove('hidden')
+                overlay.classList.add('flex')
+                icon.textContent = '✕'
+                icon.style.transform = 'rotate(90deg)'
+            } else {
+                overlay.classList.add('hidden')
+                overlay.classList.remove('flex')
+                icon.textContent = '☰'
+                icon.style.transform = 'rotate(0deg)'
+            }
+        }
+        function buyPlan(planId) {
+            const plans = {
+                1: { name: 'Базовый', price: 350, period: '1 месяц' },
+                2: { name: 'Premium', price: 890, period: '3 месяца' },
+                3: { name: 'Ultimate', price: 1470, period: '6 месяцев' }
+            }
+            cart.push(plans[planId])
+            document.getElementById('cart-count').textContent = cart.length
+            showOrderModal()
+        }
+        function showOrderModal() {
+            const modal = document.getElementById('order-modal')
+            const content = document.getElementById('modal-cart-content')
+            document.body.style.overflow = 'hidden'
+            if (cart.length === 0) {
+                content.innerHTML = `
+                <p class="text-white/60 text-center py-8">Корзина пуста. Выберите тариф.</p>
+                <button onclick="hideOrderModal(); document.getElementById('tariffs').scrollIntoView({behavior:'smooth'})"
+                        class="w-full py-4 bg-white/10 hover:bg-[#00ff9d] hover:text-black rounded-3xl font-semibold transition-all">
+                    К тарифам
+                </button>`
+            } else {
+                let html = `<div class="max-h-[240px] overflow-y-auto pr-2 space-y-3 custom-scroll">`
+                let total = 0
+                cart.forEach((item, i) => {
+                    total += item.price
+                    html += `
+                    <div class="flex justify-between items-center bg-white/10 rounded-2xl p-3">
+                        <div>
+                            <div class="font-semibold">${item.name}</div>
+                            <div class="text-xs text-white/50">${item.period}</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-semibold">${item.price} ₽</div>
+                            <button onclick="removeFromCart(${i}); event.stopImmediatePropagation();" class="text-xs text-red-400 mt-1">удалить</button>
+                        </div>
+                    </div>`
+                })
+                html += `</div>`
+                html += `<div class="flex justify-between text-lg mt-8"><span>Итого</span><span class="font-semibold">${total} ₽</span></div>`
+                html += `<div class="mt-8">
+                    <label class="block text-sm mb-2 font-medium">Почта для получения ключа</label>
+                    <input type="email" id="modal-email" placeholder="example@mail.ru" class="w-full bg-white/10 border border-white/30 focus:border-[#00ff9d] rounded-3xl px-6 py-4 text-white placeholder:text-white/50 outline-none">
+                </div>`
+                html += `<div class="flex items-start gap-3 mt-6">
+                    <input type="checkbox" id="agree-check" class="mt-1.5 accent-[#00ff9d] w-5 h-5 cursor-pointer">
+                    <label for="agree-check" class="text-xs leading-tight text-white/70 cursor-pointer select-none">
+                        Нажимая кнопку «Оформить заказ» вы соглашаетесь с
+                        <a href="privacy" target="_blank" class="underline hover:text-[#00ff9d]">политикой конфиденциальности</a>
+                        и
+                        <a href="useragreement" target="_blank" class="underline hover:text-[#00ff9d]">пользовательским соглашением</a>.
+                    </label>
+                </div>`
+                html += `<div class="mt-8">
+                    <label class="block text-sm mb-3 font-medium">Метод оплаты</label>
+                    <div class="grid grid-cols-3 gap-3" id="payment-options">
+                        <div onclick="selectPaymentMethod('sbp', this)" class="payment-option flex flex-col items-center justify-center gap-2 border-2 border-white/20 hover:border-[#00ff9d] rounded-3xl py-4 cursor-pointer transition-all">
+                            <img src="sbp.svg" alt="СБП" class="w-10 h-10 object-contain"><span class="font-medium text-sm">СБП</span>
+                        </div>
+                        <div onclick="selectPaymentMethod('card', this)" class="payment-option flex flex-col items-center justify-center gap-2 border-2 border-white/20 hover:border-[#00ff9d] rounded-3xl py-4 cursor-pointer transition-all">
+                            <img src="card.svg" alt="Карта" class="w-10 h-10 object-contain"><span class="font-medium text-sm">Карта</span>
+                        </div>
+                        <div onclick="selectPaymentMethod('crypto', this)" class="payment-option flex flex-col items-center justify-center gap-2 border-2 border-white/20 hover:border-[#00ff9d] rounded-3xl py-4 cursor-pointer transition-all">
+                            <img src="cripto.svg" alt="Криптовалюта" class="w-10 h-10 object-contain"><span class="font-medium text-sm">Крипта</span>
+                        </div>
+                    </div>
+                </div>`
+                content.innerHTML = html
+                content.innerHTML += `<button onclick="completeOrder()" class="mt-6 w-full py-6 bg-[#00ff9d] text-black rounded-3xl font-semibold text-xl flex-shrink-0">Оформить заказ</button>`
+            }
+            modal.style.display = 'flex'
+            selectedPayment = null
+        }
+        function hideOrderModal() {
+            document.getElementById('order-modal').style.display = 'none'
+            document.body.style.overflow = ''
+        }
+        function removeFromCart(index) {
+            cart.splice(index, 1)
+            document.getElementById('cart-count').textContent = cart.length
+            showOrderModal()
+        }
+        function selectPaymentMethod(method, el) {
+            selectedPayment = method
+            document.querySelectorAll('.payment-option').forEach(option => option.style.borderColor = '#ffffff20')
+            el.style.borderColor = '#00ff9d'
+        }
+        function completeOrder() {
+            const agreeCheck = document.getElementById('agree-check')
+            const emailInput = document.getElementById('modal-email')
+         
+            if (agreeCheck && !agreeCheck.checked) {
+                showError('Поставьте галочку согласия с политикой конфиденциальности и пользовательским соглашением')
+                return
+            }
+            if (!selectedPayment) {
+                showError('Выберите метод оплаты')
+                return
+            }
+            if (!emailInput || !emailInput.value.trim()) {
+                showError('Укажите почту для получения ключа')
+                return
+            }
+         
+            hideOrderModal()
+           
+            setTimeout(() => {
+                const banner = document.getElementById('success-banner')
+                banner.style.display = 'flex'
+                setTimeout(() => hideSuccessBanner(), 10000)
+                cart = []
+                document.getElementById('cart-count').textContent = '0'
+                selectedPayment = null
+            }, 400)
+        }
+        function showError(message) {
+            const banner = document.getElementById('error-banner')
+            document.getElementById('error-message').innerHTML = message
+            banner.style.display = 'flex'
+            setTimeout(() => hideErrorBanner(), 4000)
+        }
+        function hideErrorBanner() {
+            document.getElementById('error-banner').style.display = 'none'
+        }
+        function hideSuccessBanner() {
+            document.getElementById('success-banner').style.display = 'none'
+        }
+        window.onload = function() {
+            initTailwind()
+            animateOnScroll()
+        }
+    </script>
+</body>
+</html>
