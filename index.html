@@ -129,16 +129,6 @@
             background: linear-gradient(90deg, #451a03, #78350f);
             border: 1px solid #f59e0b;
         }
-
-        /* Стили для 3D модели */
-        model-viewer {
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            --poster-color: transparent;
-            --min-polar-angle: 45deg;
-            --max-polar-angle: 135deg;
-        }
     </style>
 </head>
 <body class="antialiased">
@@ -186,12 +176,12 @@
             </div>
         </div>
     </header>
+
     <section class="hero-bg hero-section pt-20 pb-16">
         <div class="max-w-screen-2xl mx-auto px-6">
-            <!-- Изменённый контейнер: текст слева + 3D модель справа (на больших экранах) -->
             <div class="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 lg:gap-16 max-w-7xl mx-auto">
                 
-                <!-- Оригинальный контент (ничего не удалено, только перенесено в левый блок) -->
+                <!-- Левая часть — весь оригинальный текст -->
                 <div class="max-w-2xl text-center lg:text-left flex-1">
                     <div class="inline-flex items-center gap-2 bg-white/10 text-[#00ff9d] text-xs font-semibold tracking-[1px] px-4 h-9 rounded-3xl mb-6">
                         <div class="w-2 h-2 bg-[#00ff9d] rounded-full animate-pulse"></div>
@@ -227,7 +217,7 @@
                     </div>
                 </div>
 
-                <!-- Добавленная 3D модель scene.gltf (справа от большой надписи) -->
+                <!-- 3D модель (справа) -->
                 <div class="flex-1 w-full max-w-[520px] lg:max-w-[560px] h-[420px] md:h-[520px] lg:h-[560px] flex-shrink-0">
                     <model-viewer 
                         src="scene.gltf" 
@@ -235,6 +225,10 @@
                         auto-rotate="false" 
                         camera-controls 
                         interaction-prompt="none"
+                        min-field-of-view="38deg"
+                        max-field-of-view="38deg"
+                        min-camera-orbit="0deg 45deg 4m"
+                        max-camera-orbit="360deg 135deg 4m"
                         shadow-intensity="1.2" 
                         exposure="0.9" 
                         style="--min-polar-angle: 45deg; --max-polar-angle: 135deg;">
@@ -243,6 +237,7 @@
             </div>
         </div>
     </section>
+
     <div class="max-w-screen-2xl mx-auto px-6 py-4 border-b border-white/10 flex items-center justify-center gap-8 text-sm bg-white/5">
         <div class="flex items-center gap-3">
             <span class="text-[#00ff9d] text-2xl">🌍</span>
@@ -253,6 +248,7 @@
             <span>Даже на парковке! 🚀</span>
         </div>
     </div>
+
     <div class="max-w-screen-2xl mx-auto px-6 py-8">
         <div class="warning-banner rounded-3xl p-8 text-center flex flex-col md:flex-row items-center gap-6">
             <div class="text-5xl flex-shrink-0">⚠️</div>
@@ -269,6 +265,7 @@
             </div>
         </div>
     </div>
+
     <section id="tariffs" class="max-w-screen-2xl mx-auto px-6 py-20">
         <div class="text-center mb-12">
             <h2 class="text-4xl font-semibold tracking-tighter mb-3">Выберите тариф</h2>
@@ -339,6 +336,7 @@
             </div>
         </div>
     </section>
+
     <section id="features" class="max-w-screen-2xl mx-auto px-6 py-20 bg-black">
         <div class="text-center mb-16">
             <h2 class="section-title text-4xl font-semibold tracking-tighter">Что вы получите с Grim VPN</h2>
@@ -376,6 +374,7 @@
             </div>
         </div>
     </section>
+
     <section class="max-w-screen-2xl mx-auto px-6 py-20 border-t border-white/10">
         <div class="grid md:grid-cols-2 gap-12">
             <div>
@@ -406,6 +405,7 @@
             </div>
         </div>
     </section>
+
     <section id="faq" class="max-w-screen-2xl mx-auto px-6 py-20 pb-32 bg-[#111]">
         <h2 class="text-4xl font-semibold tracking-tighter text-center mb-12">Часто задаваемые вопросы</h2>
         <div class="max-w-2xl mx-auto space-y-4">
@@ -443,6 +443,7 @@
             </div>
         </div>
     </section>
+
     <footer class="bg-black border-t border-white/10 py-12">
         <div class="max-w-screen-2xl mx-auto px-6 text-xs text-white/40 flex flex-wrap justify-between items-center gap-6">
             <div>© 2026 Grim VPN. Все права защищены.</div>
@@ -457,6 +458,8 @@
             </div>
         </div>
     </footer>
+
+    <!-- Модальные окна (всё как было) -->
     <div onclick="if(event.target.id === 'order-modal') hideOrderModal()" id="order-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-xl z-[9999] items-center justify-center">
         <div onclick="event.stopImmediatePropagation()" class="modal-inner bg-[#111] max-w-lg w-full mx-4 rounded-3xl p-8 flex flex-col relative">
             <button onclick="hideOrderModal()" class="absolute top-5 right-5 text-4xl leading-none text-white/60 hover:text-white transition-colors">×</button>
@@ -464,6 +467,7 @@
             <div id="modal-cart-content" class="flex-1 overflow-y-auto space-y-6 custom-scroll pr-2"></div>
         </div>
     </div>
+
     <div id="success-banner" onclick="if(event.target.id === 'success-banner') hideSuccessBanner()"
          class="hidden fixed top-6 left-1/2 -translate-x-1/2 warning-banner rounded-3xl px-8 py-6 shadow-2xl flex items-center gap-6 z-[10000] max-w-lg w-full mx-4">
         <div class="text-5xl flex-shrink-0">❌</div>
@@ -479,6 +483,7 @@
         <button onclick="hideSuccessBanner(); event.stopImmediatePropagation()"
                 class="text-4xl leading-none text-white/70 hover:text-white px-3">×</button>
     </div>
+
     <div id="error-banner" onclick="if(event.target.id === 'error-banner') hideErrorBanner()"
          class="hidden fixed top-6 left-1/2 -translate-x-1/2 bg-red-500 text-white rounded-3xl px-8 py-5 shadow-2xl flex items-center gap-4 z-[10000] max-w-lg w-full mx-4">
         <div class="flex-1">
@@ -487,6 +492,7 @@
         <button onclick="hideErrorBanner(); event.stopImmediatePropagation()"
                 class="text-3xl leading-none px-3 hover:text-white/70">×</button>
     </div>
+
     <script>
         function initTailwind() { return { config(userConfig = {}) { return { configUser: userConfig, defaultTheme: { extend: {} } } } } }
         function animateOnScroll() {
@@ -496,9 +502,11 @@
             }, { threshold: 0.2 })
             elements.forEach(el => observer.observe(el))
         }
+
         let cart = []
         let selectedPayment = null
         let isMenuOpen = false
+
         function toggleMobileMenu() {
             const overlay = document.getElementById('mobile-menu-overlay')
             const icon = document.getElementById('menu-icon')
@@ -515,6 +523,7 @@
                 icon.style.transform = 'rotate(0deg)'
             }
         }
+
         function buyPlan(planId) {
             const plans = {
                 1: { name: 'Базовый', price: 350, period: '1 месяц' },
@@ -525,6 +534,7 @@
             document.getElementById('cart-count').textContent = cart.length
             showOrderModal()
         }
+
         function showOrderModal() {
             const modal = document.getElementById('order-modal')
             const content = document.getElementById('modal-cart-content')
@@ -588,20 +598,24 @@
             modal.style.display = 'flex'
             selectedPayment = null
         }
+
         function hideOrderModal() {
             document.getElementById('order-modal').style.display = 'none'
             document.body.style.overflow = ''
         }
+
         function removeFromCart(index) {
             cart.splice(index, 1)
             document.getElementById('cart-count').textContent = cart.length
             showOrderModal()
         }
+
         function selectPaymentMethod(method, el) {
             selectedPayment = method
             document.querySelectorAll('.payment-option').forEach(option => option.style.borderColor = '#ffffff20')
             el.style.borderColor = '#00ff9d'
         }
+
         function completeOrder() {
             const agreeCheck = document.getElementById('agree-check')
             const emailInput = document.getElementById('modal-email')
@@ -630,18 +644,37 @@
                 selectedPayment = null
             }, 400)
         }
+
         function showError(message) {
             const banner = document.getElementById('error-banner')
             document.getElementById('error-message').innerHTML = message
             banner.style.display = 'flex'
             setTimeout(() => hideErrorBanner(), 4000)
         }
+
         function hideErrorBanner() {
             document.getElementById('error-banner').style.display = 'none'
         }
+
         function hideSuccessBanner() {
             document.getElementById('success-banner').style.display = 'none'
         }
+
+        // ====================== 3D МОДЕЛЬ ======================
+        // Отключаем правую кнопку и колесо мыши
+        document.addEventListener('DOMContentLoaded', () => {
+            const modelViewer = document.querySelector('model-viewer');
+            if (modelViewer) {
+                modelViewer.addEventListener('load', () => {
+                    modelViewer.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+                    modelViewer.addEventListener('contextmenu', (e) => e.preventDefault());
+                    modelViewer.addEventListener('pointerdown', (e) => {
+                        if (e.button === 2) e.preventDefault();
+                    });
+                });
+            }
+        });
+
         window.onload = function() {
             initTailwind()
             animateOnScroll()
