@@ -7,71 +7,72 @@
     <link rel="icon" href="favicon.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap');
-    
+   
         :root {
             --tw-color-primary: #00ff9d;
         }
-    
+   
         * {
             font-family: 'Inter', system-ui, sans-serif;
         }
-    
+   
         body {
             background: #0a0a0a;
             color: #f0f0f0;
         }
-    
+   
         .header-bg {
             background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
         }
-    
+   
         .hero-bg {
             background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 70%);
         }
-    
+   
         .card-hover {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-    
+   
         .card-hover:hover {
             transform: translateY(-4px);
             box-shadow: 0 25px 50px -12px rgb(0 255 157 / 0.15);
         }
-    
+   
         .section-title {
             animation: fadeInUp 0.8s ease forwards;
         }
-    
+   
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-    
+   
         .feature-icon {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-    
+   
         .feature-card:hover .feature-icon {
             transform: scale(1.1) rotate(8deg);
         }
-    
+   
         .sbs-scroll {
             opacity: 0;
             transform: translateY(40px);
             transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
-    
+   
         .sbs-scroll.visible {
             opacity: 1;
             transform: translateY(0);
         }
-    
+   
         .hero-section {
             padding-top: 128px !important;
         }
-    
+   
         .faq-item.active .faq-answer {
             max-height: 600px;
             opacity: 1;
@@ -90,7 +91,7 @@
         .faq-item.active span {
             transform: rotate(90deg);
         }
-    
+   
         .custom-scroll::-webkit-scrollbar {
             width: 6px;
         }
@@ -105,7 +106,7 @@
         #order-modal .modal-inner {
             max-height: 95vh;
         }
-       
+      
         @media (max-width: 640px) {
             #order-modal .modal-inner {
                 margin: 16px;
@@ -128,6 +129,16 @@
             background: linear-gradient(90deg, #451a03, #78350f);
             border: 1px solid #f59e0b;
         }
+
+        /* Стили для 3D модели */
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            --poster-color: transparent;
+            --min-polar-angle: 45deg;
+            --max-polar-angle: 135deg;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -137,7 +148,7 @@
                 <div class="w-9 h-9 bg-[#00ff9d] rounded-2xl flex items-center justify-center text-black font-bold text-2xl rotate-12">G</div>
                 <h1 class="text-3xl font-semibold tracking-tighter">grim</h1>
             </div>
-        
+       
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
                 <a href="index" class="text-[#00ff9d] font-semibold">Главная</a>
                 <a href="#" onclick="document.getElementById('tariffs').scrollIntoView({behavior:'smooth'})" class="hover:text-[#00ff9d] transition-colors">Тарифы</a>
@@ -145,7 +156,7 @@
                 <a href="tools" class="hover:text-[#00ff9d] transition-colors">Инструменты</a>
                 <a href="connection" class="hover:text-[#00ff9d] transition-colors">Связаться с нами</a>
             </nav>
-        
+       
             <div class="flex items-center gap-4">
                 <div onclick="showOrderModal()" class="cursor-pointer flex items-center gap-2 bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-3xl text-sm font-semibold transition-all">
                     <span class="font-medium">Корзина</span>
@@ -154,13 +165,13 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                 </div>
-            
+           
                 <button onclick="toggleMobileMenu()" class="md:hidden w-11 h-11 flex items-center justify-center text-3xl">
                     <span id="menu-icon">☰</span>
                 </button>
             </div>
         </div>
-    
+   
         <div onclick="if(event.target.id === 'mobile-menu-overlay') toggleMobileMenu()"
              id="mobile-menu-overlay"
              class="hidden fixed inset-0 bg-black/70 z-[999] md:hidden">
@@ -175,41 +186,59 @@
             </div>
         </div>
     </header>
-
     <section class="hero-bg hero-section pt-20 pb-16">
         <div class="max-w-screen-2xl mx-auto px-6">
-            <div class="max-w-2xl mx-auto text-center">
-                <div class="inline-flex items-center gap-2 bg-white/10 text-[#00ff9d] text-xs font-semibold tracking-[1px] px-4 h-9 rounded-3xl mb-6">
-                    <div class="w-2 h-2 bg-[#00ff9d] rounded-full animate-pulse"></div>
-                    НОВИНКА 2026
-                </div>
-            
-                <h1 class="text-5xl md:text-6xl lg:text-7xl font-semibold leading-none tracking-tighter">
-                    GRIM VPN<br>
-                    <span class="text-[#00ff9d]">НАДЁЖНАЯ ЗАЩИТА</span>
-                </h1>
-            
-                <p class="text-xl md:text-2xl text-white/70 mt-6">
-                    Zero-log • Encryption
-                </p>
-            
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
-                    <button onclick="buyPlan(1)"
-                            class="bg-[#00ff9d] hover:bg-white text-black font-semibold text-lg px-10 py-5 rounded-3xl flex items-center gap-3 transition-all active:scale-95 w-full sm:w-auto">
-                        Подключить за 350 ₽/мес
-                        <span class="text-sm bg-black/10 px-3 py-1 rounded-2xl">1 месяц</span>
-                    </button>
+            <!-- Изменённый контейнер: текст слева + 3D модель справа (на больших экранах) -->
+            <div class="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 lg:gap-16 max-w-7xl mx-auto">
                 
-                    <button onclick="document.getElementById('tariffs').scrollIntoView({behavior:'smooth'})"
-                            class="border border-white/30 hover:border-white/70 font-medium text-lg px-8 py-5 rounded-3xl transition-all w-full sm:w-auto">
-                        Все тарифы →
-                    </button>
+                <!-- Оригинальный контент (ничего не удалено, только перенесено в левый блок) -->
+                <div class="max-w-2xl text-center lg:text-left flex-1">
+                    <div class="inline-flex items-center gap-2 bg-white/10 text-[#00ff9d] text-xs font-semibold tracking-[1px] px-4 h-9 rounded-3xl mb-6">
+                        <div class="w-2 h-2 bg-[#00ff9d] rounded-full animate-pulse"></div>
+                        НОВИНКА 2026
+                    </div>
+               
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-semibold leading-none tracking-tighter">
+                        GRIM VPN<br>
+                        <span class="text-[#00ff9d]">НАДЁЖНАЯ ЗАЩИТА</span>
+                    </h1>
+               
+                    <p class="text-xl md:text-2xl text-white/70 mt-6">
+                        Zero-log • Encryption
+                    </p>
+               
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mt-10">
+                        <button onclick="buyPlan(1)"
+                                class="bg-[#00ff9d] hover:bg-white text-black font-semibold text-lg px-10 py-5 rounded-3xl flex items-center gap-3 transition-all active:scale-95 w-full sm:w-auto">
+                            Подключить за 350 ₽/мес
+                            <span class="text-sm bg-black/10 px-3 py-1 rounded-2xl">1 месяц</span>
+                        </button>
+                   
+                        <button onclick="document.getElementById('tariffs').scrollIntoView({behavior:'smooth'})"
+                                class="border border-white/30 hover:border-white/70 font-medium text-lg px-8 py-5 rounded-3xl transition-all w-full sm:w-auto">
+                            Все тарифы →
+                        </button>
+                    </div>
+               
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-x-8 gap-y-2 text-sm mt-12">
+                        <div class="flex items-center gap-2"><span class="text-[#00ff9d]">✓</span> Быстрая отправка ключа</div>
+                        <div class="flex items-center gap-2"><span class="text-[#00ff9d]">✓</span> Стабильное подключение</div>
+                        <div class="flex items-center gap-2"><span class="text-[#00ff9d]">✓</span> Работает на всех устройствах</div>
+                    </div>
                 </div>
-            
-                <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm mt-12">
-                    <div class="flex items-center gap-2"><span class="text-[#00ff9d]">✓</span> Быстрая отправка ключа</div>
-                    <div class="flex items-center gap-2"><span class="text-[#00ff9d]">✓</span> Стабильное подключение</div>
-                    <div class="flex items-center gap-2"><span class="text-[#00ff9d]">✓</span> Работает на всех устройствах</div>
+
+                <!-- Добавленная 3D модель scene.gltf (справа от большой надписи) -->
+                <div class="flex-1 w-full max-w-[520px] lg:max-w-[560px] h-[420px] md:h-[520px] lg:h-[560px] flex-shrink-0">
+                    <model-viewer 
+                        src="scene.gltf" 
+                        alt="GRIM VPN 3D модель" 
+                        auto-rotate="false" 
+                        camera-controls 
+                        interaction-prompt="none"
+                        shadow-intensity="1.2" 
+                        exposure="0.9" 
+                        style="--min-polar-angle: 45deg; --max-polar-angle: 135deg;">
+                    </model-viewer>
                 </div>
             </div>
         </div>
@@ -265,7 +294,7 @@
                 </ul>
                 <button onclick="buyPlan(1)" class="w-full mt-12 bg-white text-black font-semibold py-5 rounded-3xl group-hover:bg-[#00ff9d]">Подключить</button>
             </div>
-        
+       
             <div class="card-hover bg-gradient-to-br from-[#00ff9d] to-[#00cc7a] text-black border-2 border-[#00ff9d] rounded-3xl p-8 cursor-default scale-105 relative">
                 <div class="absolute -top-3 right-6 bg-black text-[#00ff9d] text-xs font-bold px-6 py-1 rounded-3xl">ЛУЧШИЙ ВЫБОР</div>
                 <div class="flex justify-between items-start">
@@ -287,7 +316,7 @@
                 </ul>
                 <button onclick="buyPlan(2)" class="w-full mt-12 bg-black text-white font-semibold py-5 rounded-3xl">Подключить</button>
             </div>
-        
+       
             <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 cursor-default hover:border-[#00ff9d]/30 group">
                 <div class="flex justify-between items-start">
                     <div>
@@ -385,13 +414,13 @@
                     <div class="font-medium">Что нужно для подключения?</div>
                     <span class="text-2xl">›</span>
                 </div>
-               <div class="faq-answer mt-4 text-white/70">Для подключения вам нужен любой установленный клиент поддерживающий VLess протокол, например: 
-            <a href="https://github.com/Happ-proxy" target="_blank" class="text-[#00ff9d] hover:underline">Happ</a>, 
-            <a href="tools" class="text-[#00ff9d] hover:underline">V2RayTun</a>, 
+               <div class="faq-answer mt-4 text-white/70">Для подключения вам нужен любой установленный клиент поддерживающий VLess протокол, например:
+            <a href="https://github.com/Happ-proxy" target="_blank" class="text-[#00ff9d] hover:underline">Happ</a>,
+            <a href="tools" class="text-[#00ff9d] hover:underline">V2RayTun</a>,
             <a href="https://github.com/2dust/v2rayN/releases" target="_blank" class="text-[#00ff9d] hover:underline">V2rayNG</a>,
-            <a href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases" target="_blank" class="text-[#00ff9d] hover:underline">NekoBox</a> 
-               или 
-            <a href="https://github.com/hiddify/hiddify-app/releases" target="_blank" class="text-[#00ff9d] hover:underline">Hiddify</a>. 
+            <a href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases" target="_blank" class="text-[#00ff9d] hover:underline">NekoBox</a>
+               или
+            <a href="https://github.com/hiddify/hiddify-app/releases" target="_blank" class="text-[#00ff9d] hover:underline">Hiddify</a>.
                Найти их можно в Инструментах на нашем сайте.
             </div>
             </div>
@@ -407,8 +436,8 @@
                     <div class="font-medium">Что делать если не удаётся подключится?</div>
                     <span class="text-2xl">›</span>
                 </div>
-                <div class="faq-answer mt-4 text-white/70">Попробуйте обновить список доступных серверов в своём VPN клиенте, если не удётся обновить, то попробуйте удалить подписку из VPN клиента и вставить снова, должно быть стабильное интернет соединение для лучшего результата. Если ничего из перечисленного не помогает - свяжитесь с нами и мы постараемя вам помочь. Так же следите за новостями в нашем 
-                  <a href="https://t.me/grimvpn" target="_blank" class="text-[#00ff9d] hover:underline font-medium">КАНАЛЕ</a>, 
+                <div class="faq-answer mt-4 text-white/70">Попробуйте обновить список доступных серверов в своём VPN клиенте, если не удётся обновить, то попробуйте удалить подписку из VPN клиента и вставить снова, должно быть стабильное интернет соединение для лучшего результата. Если ничего из перечисленного не помогает - свяжитесь с нами и мы постараемя вам помочь. Так же следите за новостями в нашем
+                  <a href="https://t.me/grimvpn" target="_blank" class="text-[#00ff9d] hover:underline font-medium">КАНАЛЕ</a>,
                там будут публиковаться новости касающиеся нашего сервиса.
             </div>
             </div>
@@ -576,7 +605,7 @@
         function completeOrder() {
             const agreeCheck = document.getElementById('agree-check')
             const emailInput = document.getElementById('modal-email')
-         
+        
             if (agreeCheck && !agreeCheck.checked) {
                 showError('Поставьте галочку согласия с политикой конфиденциальности и пользовательским соглашением')
                 return
@@ -589,9 +618,9 @@
                 showError('Укажите почту для получения ключа')
                 return
             }
-         
+        
             hideOrderModal()
-           
+          
             setTimeout(() => {
                 const banner = document.getElementById('success-banner')
                 banner.style.display = 'flex'
