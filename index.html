@@ -224,14 +224,26 @@
                     </div>
                 </div>
 
-                <!-- Контейнер с iframe для модели -->
-<div class="flex-1 w-full max-w-[520px] lg:max-w-[600px] h-[400px] md:h-[500px] lg:h-[600px] flex-shrink-0">
-    <iframe 
-        src="model-frame.html" 
-        style="width: 100%; height: 100%; border: none; overflow: hidden;" 
-        scrolling="no"
-        allow="autoplay">
-    </iframe>
+                <div class="flex-1 w-full max-w-[520px] lg:max-w-[600px] h-[400px] md:h-[500px] lg:h-[600px] flex-shrink-0" style="min-height: 400px;">
+    <model-viewer 
+        src="laptop.glb" 
+        camera-orbit="-145deg 75deg 100%"
+        camera-controls 
+        disable-zoom 
+        disable-pan
+        interaction-prompt="none"
+        min-polar-angle="90deg" 
+        max-polar-angle="90deg"
+        touch-action="pan-y"
+        style="width: 100%; height: 100%; display: block;"
+        loading="eager"
+        reveal="auto"
+        autoplay>
+        <!-- Если модель не загрузится, мы увидим этот текст -->
+        <div slot="poster" style="color: #00ff9d; text-align: center; padding-top: 100px;">
+            Загрузка 3D модели...
+        </div>
+    </model-viewer>
 </div>
             </div>
         </div>
