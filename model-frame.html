@@ -4,7 +4,13 @@
     <script type="module" src="https://unpkg.com"></script>
     <style>
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: transparent; }
-        model-viewer { width: 100%; height: 100%; background: transparent; outline: none; }
+        model-viewer { 
+            width: 100%; 
+            height: 100%; 
+            background: transparent; 
+            outline: none;
+            --progress-bar-color: #00ff9d;
+        }
     </style>
 </head>
 <body>
@@ -18,7 +24,9 @@
         min-polar-angle="90deg" 
         max-polar-angle="90deg"
         touch-action="pan-y"
-        autoplay>
+        autoplay
+        loading="eager"
+        reveal="auto">
     </model-viewer>
 </body>
 </html>
